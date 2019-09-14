@@ -10,7 +10,7 @@ import (
 )
 
 type GeoffreyClient interface {
-	GetConfig(app, profile string) (config map[string]interface{}, err error)
+	GetConfig(app, profile string, model interface{}) error
 }
 
 type client struct {
@@ -32,24 +32,23 @@ func NewGeoffreyClient(url string, httpClient *http.Client) GeoffreyClient {
 	return &client{url: url, httpClient: httpClient}
 }
 
-func (c *client) GetConfig(app, profile string) (map[string]interface{}, error) {
+func (c *client) GetConfig(app, profile string, model interface{}) error {
 	url := c.getFormattedUrl(c.url, app, profile)
 	resp, err := c.httpClient.Get(url)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	b, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	defer resp.Body.Close()
 
-	var config map[string]interface{}
-	if err := json.Unmarshal(b, &config); err != nil {
-		return nil, err
+	if err := json.Unmarshal(b, &model); err != nil {
+		return err
 	}
 
-	return config, nil
+	return nil
 }
 
 func (c *client) getFormattedUrl(urlString, app, profile string) string {
