@@ -1,7 +1,7 @@
 package client_test
 
 import (
-	"geoffrey-go-client/pkg/client"
+	"github.com/solivaf/geoffrey-go-client/pkg/client"
 	"net/http"
 	"net/http/httptest"
 	"strings"

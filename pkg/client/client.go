@@ -2,7 +2,7 @@ package client
 
 import (
 	"encoding/json"
-	"geoffrey-go-client/internal/config"
+	"github.com/solivaf/geoffrey-go-client/internal/config"
 	"io/ioutil"
 	"net/http"
 	"strings"
