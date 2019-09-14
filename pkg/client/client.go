@@ -20,11 +20,7 @@ type client struct {
 
 func DefaultGeoffreyClient() GeoffreyClient {
 	cfg := config.GetConfig()
-	t, err := time.ParseDuration(cfg.ClientTimeout)
-	if err != nil {
-		panic(err)
-	}
-	httpClient := &http.Client{Timeout: t}
+	httpClient := &http.Client{Timeout: 10 * time.Second}
 
 	return &client{url: cfg.Url, httpClient: httpClient}
 }
